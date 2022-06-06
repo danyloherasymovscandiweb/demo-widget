@@ -1,1 +1,1 @@
-export { default } from './DemoWidget.component';
+export { default } from './DemoWidget.container';

@@ -8,6 +8,7 @@
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { DemoWidgetComponent as DemoWidget } from './DemoWidget.component';
 
 /** @namespace Scandipwa/Component/DemoWidget/Container/mapStateToProps */
 export const mapStateToProps = (state) => ({
@@ -32,6 +33,15 @@ export class DemoWidgetContainer {
         return {
             baseLinkUrl
         };
+    }
+
+    render() {
+        return (
+            <DemoWidget
+              { ...this.containerFunctions }
+              { ...this.containerProps() }
+            />
+        );
     }
 }
 

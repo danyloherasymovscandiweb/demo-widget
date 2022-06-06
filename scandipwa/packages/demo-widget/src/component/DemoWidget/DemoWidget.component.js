@@ -6,6 +6,7 @@
  * @copyright Copyright (c) 2022 Scandiweb, Inc (https://scandiweb.com)
  */
 import PropTypes from 'prop-types';
+import Html from 'SourceComponent/Html';
 import { PureComponent } from 'react';
 
 import './DemoWidget.style';
@@ -15,7 +16,8 @@ export class DemoWidgetComponent extends PureComponent {
     static propTypes = {
         title: PropTypes.string.isRequired,
         image: PropTypes.string.isRequired,
-        layout: PropTypes.string.isRequired
+        layout: PropTypes.string.isRequired,
+        wysiwyg: PropTypes.string.isRequired
     };
 
     renderImage() {
@@ -32,12 +34,18 @@ export class DemoWidgetComponent extends PureComponent {
         );
     }
 
+    renderWysiwyg() {
+        const { wysiwyg } = this.props;
+        return <Html content={ wysiwyg } />;
+    }
+
     render() {
         const { layout } = this.props;
         return (
             <div block="DemoWidget" mods={ { layout } }>
                 { this.renderTitle() }
                 { this.renderImage() }
+                { this.renderWysiwyg() }
             </div>
         );
     }

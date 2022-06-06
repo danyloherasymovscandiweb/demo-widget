@@ -9,7 +9,10 @@
 
 import RenderWhenVisible from 'Component/RenderWhenVisible';
 
-import { DemoWidgetComponent as DemoWidget } from '../../component/DemoWidget/DemoWidget.component';
+export const DemoWidget = lazy(() => import(
+    /* webpackMode: "lazy", webpackChunkName: "widget-demo" */
+    '../../component/DemoWidget'
+));
 
 // We need to notify WidgetFactory that we added new widgets. This is done by adding new key to renderMap
 // Firstly, we need to write widget's backend name (defined in widget.xml)

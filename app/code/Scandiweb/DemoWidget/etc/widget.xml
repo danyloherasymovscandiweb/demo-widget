@@ -29,6 +29,10 @@
                         </data>
                 </block>
             </parameter>
+            <parameter name="wysiwyg" xsi:type="block" required="true" visible="true" sort_order="80">
+                <label>WYSIWYG Content</label>
+                <block class="Scandiweb\DemoWidget\Block\Adminhtml\Widget\Editor"/>
+            </parameter>
         </parameters>
     </widget>
 </widgets>
