@@ -6,18 +6,19 @@
  * @copyright Copyright (c) 2022 Scandiweb, Inc (https://scandiweb.com)
  */
 import PropTypes from 'prop-types';
-import Html from 'SourceComponent/Html';
 import { PureComponent } from 'react';
+
+import Html from 'SourceComponent/Html';
 
 import './DemoWidget.style';
 
-/** @namespace DemoWidget/Component/DemoWidget/Component/DemoWidgetComponent */
+/** @namespace DemoWidget/Component/DemoWidget/Component */
 export class DemoWidgetComponent extends PureComponent {
     static propTypes = {
         title: PropTypes.string.isRequired,
         image: PropTypes.string.isRequired,
         layout: PropTypes.string.isRequired,
-        wysiwyg: PropTypes.string.isRequired
+        content: PropTypes.string.isRequired
     };
 
     renderImage() {
@@ -35,8 +36,8 @@ export class DemoWidgetComponent extends PureComponent {
     }
 
     renderWysiwyg() {
-        const { wysiwyg } = this.props;
-        return <Html content={ wysiwyg } />;
+        const { content } = this.props;
+        return <Html content={ content } />;
     }
 
     render() {

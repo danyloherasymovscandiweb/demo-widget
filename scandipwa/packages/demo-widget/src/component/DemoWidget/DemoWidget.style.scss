@@ -1,8 +1,6 @@
 .DemoWidget {
     display: flex;
-    max-height: 500px;
 
-    // this is an example feature we define in the widget options
     &_layout_column {
         flex-direction: column;
     }
