@@ -49,6 +49,11 @@ export class DemoWidgetContainer extends DataContainer {
         const seconds = Math.floor((this.state.timeLeft % (1000 * 60)) / 1000);
         // html parser doesn't see opening and closing tags in element format, that's why we replace them with < and >
         const content = wysiwyg.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+        const timeLeft = this.state.timeLeft;
+        const noTimeLeft = timeLeft <= 0;
+        if (noTimeLeft) {
+            days, hours, seconds, minutes = 0;
+        }
 
         return {
             baseLinkUrl,
@@ -64,7 +69,9 @@ export class DemoWidgetContainer extends DataContainer {
             days,
             hours,
             minutes,
-            seconds
+            seconds,
+            timeLeft,
+            noTimeLeft
         };
     }
 
@@ -93,35 +100,9 @@ export class DemoWidgetContainer extends DataContainer {
         clearInterval(this.interval);
     }
 
-    formatTimeLeft(timeLeft) {
-        const {
-            days,
-            hours,
-            seconds,
-            minutes
-        } = this.props;
-
-        if (timeLeft <= 0) {
-            return [0, 0, 0, 0];
-        }
-
-        return [days, hours, minutes, seconds];
-    }
-
     render() {
-        const { date: phrase } = this.props;
-        const { timeLeft } = this.state;
-
-        const [days, hours, minutes, seconds] = this.formatTimeLeft(timeLeft);
-        const noTimeLeft = timeLeft <= 0;
         return (
             <DemoWidget
-              days={ days }
-              hours={ hours }
-              minutes={ minutes }
-              seconds={ seconds }
-              noTimeLeft={ noTimeLeft }
-              phrase={ phrase }
               { ...this.containerFunctions }
               { ...this.containerProps() }
             />
