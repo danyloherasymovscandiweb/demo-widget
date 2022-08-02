@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 /* eslint-disable no-magic-numbers */
 /**
  * @category  ScandiPWA
@@ -14,26 +15,20 @@ import DataContainer from 'Util/Request/DataContainer';
 
 import { DemoWidgetComponent as DemoWidget } from './DemoWidget.component';
 
-/** @namespace DemoWidget/Component/DemoWidget/Container/mapStateToProps */
+/** @namespace Scandipwa/Component/DemoWidget/Container/mapStateToProps */
 export const mapStateToProps = (state) => ({
     baseLinkUrl: state.ConfigReducer.base_link_url // it's a random state imported from ConfigReducer, nothing crucial
 });
 
-/** @namespace DemoWidget/Component/DemoWidget/Container/mapDispatchToProps */
+/** @namespace Scandipwa/Component/DemoWidget/Container/mapDispatchToProps */
 export const mapDispatchToProps = () => ({
 });
 
-/** @namespace DemoWidget/Component/DemoWidget/Container */
+/** @namespace Scandipwa/Component/DemoWidget/Container */
 export class DemoWidgetContainer extends DataContainer {
     static propTypes = {
         baseLinkUrl: PropTypes.string.isRequired
     };
-
-    state = {
-        timeLeft: 0
-    };
-
-    containerFunctions = {};
 
     containerProps() {
         const {
@@ -46,9 +41,12 @@ export class DemoWidgetContainer extends DataContainer {
             color,
             date,
             phrase,
-            link
+            link = '',
+            textarea
         } = this.props;
 
+        const new_string = this.cleanJson();
+        const noTimeLeft = this.state.timeLeft <= 0;
         const days = Math.floor(this.state.timeLeft / (1000 * 60 * 60 * 24));
         const hours = Math.floor((this.state.timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((this.state.timeLeft % (1000 * 60 * 60)) / (1000 * 60));
@@ -70,7 +68,10 @@ export class DemoWidgetContainer extends DataContainer {
             days,
             hours,
             minutes,
-            seconds
+            seconds,
+            noTimeLeft,
+            new_string,
+            textarea
         };
     }
 
@@ -95,40 +96,21 @@ export class DemoWidgetContainer extends DataContainer {
         }, 1000);
     }
 
+    cleanJson() {
+        const { textarea } = this.props;
+
+        const realJson = textarea.replaceAll('\\"', '"');
+
+        return realJson;
+    }
+
     componentWillUnmount() {
         clearInterval(this.interval);
     }
 
-    formatTimeLeft(timeLeft) {
-        const {
-            days,
-            hours,
-            seconds,
-            minutes
-        } = this.props;
-
-        if (timeLeft <= 0) {
-            return [0, 0, 0, 0];
-        }
-
-        return [days, hours, minutes, seconds];
-    }
-
     render() {
-        const { date: phrase } = this.props;
-        const { timeLeft } = this.state;
-
-        const [days, hours, minutes, seconds] = this.formatTimeLeft(timeLeft);
-        const noTimeLeft = timeLeft <= 0;
         return (
             <DemoWidget
-              days={ days }
-              hours={ hours }
-              minutes={ minutes }
-              seconds={ seconds }
-              noTimeLeft={ noTimeLeft }
-              phrase={ phrase }
-              { ...this.containerFunctions }
               { ...this.containerProps() }
             />
         );
