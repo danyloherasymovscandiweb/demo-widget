@@ -67,8 +67,12 @@
             </parameter>
             <parameter name="textarea" xsi:type="block" required="true" visible="true" sort_order="120">
                 <label translate="true">Text</label>
-                <description translate="true">In order for widget to work correctly, please escape all double quote characters like this: '\"'</description>
+                <description translate="true">In order for widget to work correctly, please escape all double quote characters like this: \"</description>
                 <block class="Scandiweb\DemoWidget\Block\Adminhtml\Widget\TextField"/>
+            </parameter>
+            <parameter name="rows" xsi:type="block" required="true" visible="true" sort_order="130">
+                <label translate="true">Table: </label>
+                <block class="Scandiweb\DemoWidget\Block\Adminhtml\Widget\DynamicTable"/>
             </parameter>
         </parameters>
     </widget>

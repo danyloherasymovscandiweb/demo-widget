@@ -1,0 +1,24 @@
+<?php
+/**
+ * @category  ScandiPWA
+ * @author    Mert Gulmus <mert.gulmus@scandiweb.com | info@scandiweb.com>
+ * @author    Arturs Strucinskis <arturs.strucinskis@scandiweb.com | info@scandiweb.com>
+ * @license   http://opensource.org/licenses/OSL-3.0 The Open Software License 3.0 (OSL-3.0)
+ * @copyright Copyright (c) 2022 Scandiweb, Inc (https://scandiweb.com)
+ *
+ * @var $block Scandiweb\DemoWidget\Block\Widget\Demo
+ */
+?>
+
+<widget type="DemoWidget"
+        image="<?= $escaper->escapeHtml($block->getImage()) ?>"
+        title="<?= $escaper->escapeHtml($block->getTitle()) ?>"
+        wysiwyg="<?= $escaper->escapeHtml($block->getWysiwyg()) ?>"
+        color="<?= $escaper->escapeHtml($block->getColor()) ?>"
+        link="<?= $escaper->escapeHtml($block->getLink()) ?>"
+        category="<?= $escaper->escapeHtml($block->getCategoryUrl()) ?>"
+        date="<?= $escaper->escapeHtml($block->getDate()) ?>"
+        phrase="<?= $escaper->escapeHtml($block->getPhrase()) ?>"
+        textarea="<?= $escaper->escapeHtml($block->getTextarea()) ?>"
+        rows="<?= $escaper->escapeHtml($block->getRows()) ?>"
+/>

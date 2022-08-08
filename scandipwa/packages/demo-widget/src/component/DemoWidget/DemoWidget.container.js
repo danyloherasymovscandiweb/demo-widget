@@ -1,3 +1,4 @@
+/* eslint-disable prefer-template */
 /* eslint-disable no-useless-escape */
 /* eslint-disable no-magic-numbers */
 /**
@@ -42,15 +43,19 @@ export class DemoWidgetContainer extends DataContainer {
             date,
             phrase,
             link = '',
-            textarea
+            rows
         } = this.props;
 
-        const new_string = this.cleanJson();
+        // we replace symbols we used to parse inputs from dynamic tables correctly with proper symbols and
+        // turn the string into an array of objects
+        const dynamicRowsArray = this.cleanStringAndTurnToArr(rows);
+
         const noTimeLeft = this.state.timeLeft <= 0;
         const days = Math.floor(this.state.timeLeft / (1000 * 60 * 60 * 24));
         const hours = Math.floor((this.state.timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((this.state.timeLeft % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((this.state.timeLeft % (1000 * 60)) / 1000);
+
         // html parser doesn't see opening and closing tags in element format, that's why we replace them with < and >
         const content = wysiwyg.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
 
@@ -70,8 +75,7 @@ export class DemoWidgetContainer extends DataContainer {
             minutes,
             seconds,
             noTimeLeft,
-            new_string,
-            textarea
+            dynamicRowsArray
         };
     }
 
@@ -96,12 +100,17 @@ export class DemoWidgetContainer extends DataContainer {
         }, 1000);
     }
 
-    cleanJson() {
-        const { textarea } = this.props;
+    cleanStringAndTurnToArr(string) {
+        // we change single quotes with double quotes to make proper JSON
+        const doubleQuoteString = string.replaceAll('\'', '"');
 
-        const realJson = textarea.replaceAll('\\"', '"');
+        // we make an array of objects, where each object equals to a row of input fields, defined on BE
+        const dirtyArr = doubleQuoteString.split(',');
 
-        return realJson;
+        // we change symbols we used to prevent object from splitting to a normal comma and turn
+        // each object to a proper JSON
+        const cleanArr = dirtyArr.map((item) => JSON.parse(item.replaceAll('|', ',')));
+        return cleanArr;
     }
 
     componentWillUnmount() {
